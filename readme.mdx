@@ -8,9 +8,11 @@
 
 1. [Bootstrap](https://getbootstrap.com/)
 2. [Font Awesome](https://fontawesome.com/)
-1. [Firebase SDK](https://github.com/firebase/firebase-js-sdk)
+3. [Firebase SDK](https://github.com/firebase/firebase-js-sdk)
 
-Installation 
+<hr />
+
+Installation
 
 ```
 npm i --save-dev @fortawesome/fontawesome-free @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome bootstrap jquery popper.js firebase
@@ -18,13 +20,14 @@ npm i --save-dev @fortawesome/fontawesome-free @fortawesome/fontawesome-svg-core
 
 ## Set up config
 
-We add 
+We add
+
 1. Router
 2. CSS-preprocessor(node-sass)
 3. ESLint+Prettier
 4. All configs in package.json
 
-In `package.json` add this: 
+In `package.json` add this:
 
 ```
 "postcss": {
@@ -33,3 +36,28 @@ In `package.json` add this:
     }
   },
 ```
+
+<hr />
+
+## Routing
+
+We are using the default router with no custom server.
+For that, we have a router module the is created by the CLI `router/index.js`.
+
+### Router
+
+This is the place we will define all the routes and the components. We can import the components dynamically using inline imports.
+
+#### Navigation
+
+In `App.Vue` we have
+
+`<router-link to="/">Home</router-link>`.
+
+This are link to nav links to the speciifed route. We have a `to` attribute which help us in definig the destination route.
+
+`<router-view />`
+
+The view is loaded inside the `<router-view />` according to the route we are in. You can think of it like a container were the current view is loaded as per the route we are in.
+
+<hr />
