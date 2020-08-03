@@ -92,4 +92,16 @@ This are link to nav links to the speciifed route. We have a `to` attribute whic
 
 The view is loaded inside the `<router-view />` according to the route we are in. You can think of it like a container were the current view is loaded as per the route we are in.
 
+To navigate from code one can use `this.$router.push(route_name)` or `this.$router.replace(route_name)`
+
 <hr />
+
+### emit
+
+To trigger the method in parent from child component one can use the `$emit` method.
+
+```
+<child-component @click="$emit(event_name)">
+
+<parent-component @event_name="handler">
+```

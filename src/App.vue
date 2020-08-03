@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navigation />
+    <Navigation :user="user" @log-out="logout" />
     <router-view class="container" :user="user" @log-out="logout" />
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   mounted() {
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.user = user.displayName;
+        this.user = user.displayName || user.email;
       }
     });
     // db.collection("users")
