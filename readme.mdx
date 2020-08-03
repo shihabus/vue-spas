@@ -3,3 +3,33 @@
 1. [Vue Documentation](https://vuejs.org/v2/guide/)
 2. [Vue CLI](https://cli.vuejs.org/)
 3. [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
+
+## Thrid party libs and tools
+
+1. [Bootstrap](https://getbootstrap.com/)
+2. [Font Awesome](https://fontawesome.com/)
+1. [Firebase SDK](https://github.com/firebase/firebase-js-sdk)
+
+Installation 
+
+```
+npm i --save-dev @fortawesome/fontawesome-free @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome bootstrap jquery popper.js firebase
+```
+
+## Set up config
+
+We add 
+1. Router
+2. CSS-preprocessor(node-sass)
+3. ESLint+Prettier
+4. All configs in package.json
+
+In `package.json` add this: 
+
+```
+"postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+```
