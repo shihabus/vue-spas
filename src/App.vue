@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <Navigation :user="user" @log-out="logout" />
-    <router-view class="container" :user="user" @log-out="logout" />
+    <router-view
+      class="container"
+      :user="user"
+      @log-out="logout"
+      @add-meeting="addMeeting"
+    />
   </div>
 </template>
 
@@ -29,11 +34,21 @@ export default {
           this.$router.push("login");
         });
     },
+    addMeeting: function(payload) {
+      console.log("payload", this.user.uid);
+      db.collection("users")
+        .doc(this.user.uid)
+        .collection("meetings")
+        .add({
+          name: payload,
+          createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    },
   },
   mounted() {
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.user = user.displayName || user.email;
+        this.user = user;
       }
     });
     // db.collection("users")

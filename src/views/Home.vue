@@ -2,7 +2,10 @@
   <div class="mt-3">
     <div class="text-secondary text-center">
       <div v-if="user" class="text-center">
-        Welcome back <span class="font-weight-bold text-info">{{ user }}</span
+        Welcome back
+        <span class="font-weight-bold text-info">{{
+          user.displayName || user.email
+        }}</span
         >,
         <a
           href="#"
