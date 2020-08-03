@@ -23,6 +23,7 @@ export default {
   data: function() {
     return {
       user: null,
+      meetings: [],
     };
   },
   methods: {
@@ -49,6 +50,17 @@ export default {
     Firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
+        db.collection("users")
+          .doc(this.user.uid)
+          .collection("meetings")
+          .onSnapshot((snapshot) => {
+            snapshot.forEach((doc) => {
+              this.meetings.push({
+                id: doc.id,
+                name: doc.data().name,
+              });
+            });
+          });
       }
     });
     // db.collection("users")
