@@ -7,8 +7,9 @@
 
 <script>
 import Navigation from "@/components/Navigation.vue";
-// import Firebase from "firebase";
+import Firebase from "firebase";
 import db from "@/db";
+
 export default {
   name: "App",
   components: {
@@ -20,12 +21,17 @@ export default {
     };
   },
   mounted() {
-    db.collection("users")
-      .doc("oGv5PL16KhzzBtX3fCEt")
-      .get()
-      .then((snapshot) => {
-        this.user = snapshot.data().name;
-      });
+    Firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user.email;
+      }
+    });
+    // db.collection("users")
+    //   .doc("oGv5PL16KhzzBtX3fCEt")
+    //   .get()
+    //   .then((snapshot) => {
+    //     this.user = snapshot.data().name;
+    //   });
   },
 };
 </script>
