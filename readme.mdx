@@ -48,6 +48,38 @@ For that, we have a router module the is created by the CLI `router/index.js`.
 
 This is the place we will define all the routes and the components. We can import the components dynamically using inline imports.
 
+`router/index.js`
+
+```
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";  // importing component
+
+Vue.use(VueRouter); // configuring to use VueRouter
+
+// route config
+cons routes=[
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    ......
+  },
+  {
+    path:'*',       // default route
+    redirect:'/'    // if no match redirect to home
+  }
+]
+
+const router = new VueRouter({
+  routes,
+});
+
+export default router;
+```
+
 #### Navigation
 
 In `App.Vue` we have
