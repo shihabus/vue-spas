@@ -101,11 +101,18 @@ export default {
         Firebase.auth()
           .createUserWithEmailAndPassword(info.email, info.password)
           .then((userCredentials) => {
-            console.log(userCredentials);
-            this.$router.replace("meetings"),
+            return (
+              userCredentials.user
+                .updateProfile({
+                  displayName: this.displayName,
+                })
+                .then(() => {
+                  this.$router.replace("meetings");
+                }),
               (error) => {
                 this.error = error;
-              };
+              }
+            );
           });
       }
     },
