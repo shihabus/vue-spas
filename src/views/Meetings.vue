@@ -33,12 +33,66 @@
         </div>
       </div>
     </div>
+    <div class="row justify-content-center">
+      <div class="col-11 col-md-8 col-lg-6">
+        <div class="card border-top-0 rounded-0">
+          <div class="card-body py-2">
+            <h4 class="card-title m-0 text-center">Your Meetings</h4>
+          </div>
+          <div class="list-group list-group-flush">
+            <div
+              class="list-group-item d-flex"
+              v-for="meeting in meetings"
+              :key="meeting.id"
+            >
+              <section
+                class="btn-group align-self-center"
+                role="group"
+                aria-label="Meeting Options"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  title="Delete Meeting"
+                  @click="$emit('delete-meeting', meeting.id)"
+                >
+                  <font-awesome-icon icon="trash" />
+                </button>
+
+                <router-link
+                  class="btn btn-sm btn-outline-secondary"
+                  title="Check In"
+                  to="/"
+                >
+                  <font-awesome-icon icon="link" />
+                </router-link>
+
+                <router-link
+                  class="btn btn-sm btn-outline-secondary"
+                  title="Attendees"
+                  to="/"
+                >
+                  <font-awesome-icon icon="list-ul" />
+                </router-link>
+              </section>
+
+              <section class="pl-3 text-left align-self-center">
+                {{ meeting.name }}
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
   name: "Meeting",
-  props: ["user"],
+  props: ["user", "meetings"],
+  components: {
+    FontAwesomeIcon,
+  },
   data() {
     return {
       meetingName: null,
