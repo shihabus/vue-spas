@@ -15,8 +15,13 @@
               v-if="user !== null && user.uid === userID"
             >
               <button
-                class="btn btn-sm btn-outline-secondary"
+                class="btn btn-sm"
+                :class="[
+                  attendee.star ? 'text-danger' : '',
+                  'btn-outline-secondary',
+                ]"
                 title="Give user a Star"
+                @click="toggleStar(attendee.id)"
               >
                 <font-awesome-icon icon="star"></font-awesome-icon>
               </button>
@@ -68,6 +73,30 @@ export default {
           .delete();
       }
     },
+    toggleStar: function(id) {
+      if (this.user && this.user.uid === this.userID) {
+        const reference = db
+          .collection("users")
+          .doc(this.userID)
+          .collection("meetings")
+          .doc(this.meetingID)
+          .collection("attendees")
+          .doc(id);
+
+        reference.get().then((doc) => {
+          const star = doc.data().star;
+          if (star) {
+            reference.update({
+              star: !star,
+            });
+          } else {
+            reference.update({
+              star: true,
+            });
+          }
+        });
+      }
+    },
   },
   mounted() {
     db.collection("users")
@@ -83,6 +112,7 @@ export default {
             id: doc.id,
             email: doc.data().email,
             name: doc.data().displayName,
+            star: doc.data().star,
           });
         });
         this.attendees = snapData;
