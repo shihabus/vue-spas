@@ -5,9 +5,11 @@
       class="container"
       :user="user"
       :meetings="meetings"
+      :error="error"
       @log-out="logout"
       @add-meeting="addMeeting"
       @delete-meeting="deleteMeeting"
+      @check-in="CheckIn"
     />
   </div>
 </template>
@@ -26,6 +28,7 @@ export default {
     return {
       user: null,
       meetings: [],
+      error: null,
     };
   },
   methods: {
@@ -52,6 +55,35 @@ export default {
         .collection("meetings")
         .doc(meetingId)
         .delete();
+    },
+    CheckIn: function(payload) {
+      // const { userID, meetingID, displayName, email } = payload;
+      console.log("userID", payload.userID, "||", payload.meetingID);
+      db.collection("users")
+        .doc(payload.userID)
+        .collection("meetings")
+        .doc(payload.meetingID)
+        .get()
+        .then((doc) => {
+          console.log("doc", doc);
+          if (doc.exists) {
+            db.collection("users")
+              .doc(payload.userID)
+              .collection("meetings")
+              .doc(payload.meetingID)
+              .collection("attendees")
+              .add({
+                displayName: payload.displayName,
+                email: payload.email,
+                createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
+              })
+              .then(() => {
+                this.$router.push("/");
+              });
+          } else {
+            this.error = "No such meeting";
+          }
+        });
     },
   },
   mounted() {

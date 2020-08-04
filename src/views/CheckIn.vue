@@ -7,8 +7,8 @@
             <div class="card-body">
               <h3 class="font-weight-light mb-3">Check in</h3>
               <section class="form-group">
-                <div class="col-12 alert alert-danger px-3">
-                  error
+                <div class="col-12 alert alert-danger px-3" v-if="error">
+                  {{ error }}
                 </div>
                 <label class="form-control-label sr-only" for="displayName"
                   >Name</label
@@ -46,6 +46,7 @@
 <script>
 export default {
   name: "CheckIn",
+  props: ["error"],
   data() {
     return {
       displayName: null,
@@ -55,6 +56,12 @@ export default {
   methods: {
     handleCheckIn: function() {
       const { userID, meetingID } = this.$route.params;
+      this.$emit("check-in", {
+        userID,
+        meetingID,
+        displayName: this.displayName,
+        email: this.email,
+      });
       this.displayName = null;
       this.email = null;
     },
