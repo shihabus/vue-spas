@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Meetings from "../views/Meetings.vue";
+import CheckIn from "../views/CheckIn.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/meetings",
     name: "Meetings",
     component: Meetings,
+  },
+  {
+    path: "/checkin/:userID/:meetingID",
+    name: "CheckIn",
+    component: CheckIn,
   },
   // this is kind of a default route
   {
