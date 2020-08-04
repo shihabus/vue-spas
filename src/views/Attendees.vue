@@ -10,6 +10,31 @@
           <div
             class="card-body px-3 py-2 d-flex align-items-center justify-content-center"
           >
+            <div
+              class="btn-group pr-2"
+              v-if="user !== null && user.uid === userID"
+            >
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                title="Give user a Star"
+              >
+                <font-awesome-icon icon="star"></font-awesome-icon>
+              </button>
+              <a
+                class="btn btn-sm btn-outline-secondary"
+                title="Send user an email"
+                :href="'mailto:' + attendee.email"
+              >
+                <font-awesome-icon icon="envelope"></font-awesome-icon>
+              </a>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                title="Delete Attendee"
+                @click="deleteAttendee(attendee.id)"
+              >
+                <font-awesome-icon icon="trash"></font-awesome-icon>
+              </button>
+            </div>
             <div>{{ attendee.name }}</div>
           </div>
         </div>
@@ -19,14 +44,30 @@
 </template>
 <script>
 import db from "@/db";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
   name: "Attendees",
+  props: ["user"],
   data() {
     return {
       attendees: [],
       userID: this.$route.params.userID,
       meetingID: this.$route.params.meetingID,
     };
+  },
+  components: { FontAwesomeIcon },
+  methods: {
+    deleteAttendee: function(id) {
+      if (this.user && this.user.uid === this.userID) {
+        db.collection("users")
+          .doc(this.userID)
+          .collection("meetings")
+          .doc(this.meetingID)
+          .collection("attendees")
+          .doc(id)
+          .delete();
+      }
+    },
   },
   mounted() {
     db.collection("users")
