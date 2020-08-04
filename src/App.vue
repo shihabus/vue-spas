@@ -78,7 +78,9 @@ export default {
                 createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
               })
               .then(() => {
-                this.$router.push("/");
+                this.$router.push(
+                  "/attendees/" + payload.userID + "/" + payload.meetingID
+                );
               });
           } else {
             this.error = "No such meeting";
